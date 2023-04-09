@@ -1,12 +1,17 @@
-# The while True loop never continues until it's told to stop 
+
+"""   **************             This is the code for the Rock Paper Scissors game.            ************    """
+"""   *****************************************************************************************************    """
 
 def play_rock_paper_scissors_game():
+
   player1_score = 0
   player2_score = 0
   num_draws = 0
-  round = 0
+
 
   print("\nWelcome, let's play rock paper scissors!")
+
+  # The while True loop continues until it's told to stop 
   while True:
     player1_input = input("\nPlayer 1, to play rock paper scissors enter one of r, p or s: ")
     player2_input = input("\nPlayer 2, to play rock paper scissors enter one of r, p or s: ")
@@ -14,7 +19,7 @@ def play_rock_paper_scissors_game():
     player1 = player1_input.lower()
     player2 = player2_input.lower()
 
-
+  # Prints out player 1's selection
     if(player1 == 'r'):
       print("\nPlayer 1 is rock")
     if(player1 == 's'):
@@ -23,7 +28,8 @@ def play_rock_paper_scissors_game():
       print("\nPlayer 1 is paper")
 
     print("--------------------------")
-
+  
+  # Prints out player 2's selection
     if(player2 == 'r'):
       print("Player 2 is rock")
     if(player2 == 's'):
@@ -33,6 +39,7 @@ def play_rock_paper_scissors_game():
 
     print("--------------------------")
 
+  # Go through if-else logic to determine which player wins the round
     if(player1 == 's' and player2 == 'p'):
       print("Player 1 won and Player 2 lost.")
       player1_score += 1
@@ -59,9 +66,10 @@ def play_rock_paper_scissors_game():
     print("\nThe number of draws are:", num_draws)
 
   # After each turn ask user if they'd like to continue to play or not 
-    exit_loop = input("\nDo you want to continue playing the game? Answer yes or no: ")
+    exit_loop = input("\nDo you want to continue playing the game? Answer 'yes' or 'no': ")
     if exit_loop.lower() == "no":
-       
+      
+      # Print out the final results of the game session to a text file 
        try:
         lines = ['Player 1 total score: ', str(player1_score), 'Player 2 total score: ', str(player2_score)]
         with open("rps_game_results.txt", 'w') as rps_file:
