@@ -1,13 +1,15 @@
+"""   **************             This is the code for the Tic Tac Toe game.            ************    """
+"""   *********************************************************************************************    """
+
+
 BOARD = {1: ' ',  2: ' ',  3: ' ',
 
         4: ' ',  5: ' ',  6: ' ',
 
         7: ' ',  8: ' ',  9: ' '}
 
-current_player = 'X'
-game_round = 0
-game_over = False
 
+game_round = 0
 
 def render(BOARD):
     '''
@@ -61,44 +63,22 @@ def get_action(current_player):
     ---------------------
     BOARD : dict
 
-    *Note: Implementing a while loop in this function is recommended,
-    but make sure you aren't coding any infinite loops.
+
     '''
     # ----------------
     # INSERT CODE HERE
     # ----------------
 
-    player_move = int(input("\nPlease enter a number between 1 and 9 to place your marker in the desired position: "))
+    player_move = int(input(f"\nPlayer {current_player}, please enter a number between 1 and 9 to place your marker in the desired position: "))
         
     if player_move >= 1 and player_move <=9 and BOARD[player_move] == ' ':
         BOARD[player_move] = current_player
+
     else:
-        print("Sorry this place is already filled. Please make another selection.")
+        print("\nSorry this place is already filled. Please make another selection.")
   
 
-
-def victory_message(current_player):
-    '''
-    Prints the updated board and returns a victory message for the
-    winning player.
-
-    Parameters
-    ----------
-    player : 'X' / 'O'
-
-    Returns
-    -------
-    victory_message : str
-
-    Implements (See also)
-    ---------------------
-    print_t3() : func
-    '''
-    # ----------------
-    # INSERT CODE HERE
-    # ----------------
-
-def check_win(player):
+def check_win(current_player):
     '''
     Checks victory conditions. If found, calls victory_message().
     This can be done with one long chain of if/elif statements, but
@@ -116,14 +96,56 @@ def check_win(player):
     Implements (See also)
     ---------------------
     BOARD : dict
-    victory_message(player) : func
     '''
     # ----------------
     # INSERT CODE HERE
     # ----------------
 
-    
+        # Check horizontal conditions
+    if BOARD[1] == BOARD[2] == BOARD[3] and BOARD[1] != " " :
+        render(BOARD)
+        # put this in victory message
+        print(f"\nCongrats player {BOARD[1]}! You won this round of tic tac toe!")
+        return True
 
+    elif BOARD[4] == BOARD[5] == BOARD[6] and BOARD[4] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[4]}! You won this round of tic tac toe!")
+        return True
+    
+    elif BOARD[7] == BOARD[8] == BOARD[9] and BOARD[7] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[7]}! You won this round of tic tac toe!")
+        return True
+
+    # Check vertical conditions
+
+    elif BOARD[1] == BOARD[4] == BOARD[7] and BOARD[1] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[1]}! You won this round of tic tac toe!")
+        return True
+    
+    elif BOARD[2] == BOARD[5] == BOARD[8] and BOARD[2] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[2]}! You won this round of tic tac toe!")
+        return True
+    
+    elif BOARD[3] == BOARD[6] == BOARD[9] and BOARD[3] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[3]}! You won this round of tic tac toe!")
+        return True
+
+    # Check diagonal conditions 
+
+    elif BOARD[1] == BOARD[5] == BOARD[9] and BOARD[1] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[1]}! You won this round of tic tac toe!")
+        return True
+        
+    elif BOARD[3] == BOARD[5] == BOARD[7] and BOARD[3] != " " :
+        render(BOARD)
+        print(f"\nCongrats player {BOARD[3]}! You won this round of tic tac toe!")
+        return True
 
 
 def play_tic_tac_toe_game():
@@ -142,10 +164,12 @@ def play_tic_tac_toe_game():
     inescapable infinite loops.
     '''
 
+    current_player = "X"
+    game_over = False
+    game_round = 0
 
-    while not game_over:
 
-       # game_over = True # Delete this line when you're ready to run the loop.
+    while game_over == False:
 
         # Print the current state of the board
         render(BOARD)
@@ -154,23 +178,37 @@ def play_tic_tac_toe_game():
         action = get_action(current_player)
        
         # Assign the current player ('X' or 'O') as a value to BOARD. Use the 'action' variable as the key.
+        BOARD[action] = current_player
 
         # Increment the game round by 1.
+        game_round += 1
 
-        # Check if the game is winnable (game_round >= 4),
+        # Check if the game is winnable (game_round >= 5),
             # then check for win conditions (check_win(player)),
                 # and if there's a win, end the game (game_over = True),
                 # and break the loop (break).
+        
+        if game_round >= 5:       
+            if check_win(current_player) == True:
+                game_over = True
+                break
+
 
         # Check if there are any open spots left (game_round == 9),
             # and if there aren't, print a tie message,
             # end the game,
             # and break the loop.
+        
+        if game_round == 9:
+                render(BOARD)
+                print("\nIt looks a like a tie! Nobody wins this round of tic tac toe.")
+                game_over = True
+                break
+
 
         # switch players with a quick conditional loop.
-
-      #  if player == 'X': player = 'O'
-      #  else: player = 'X'
+        if current_player == 'X': current_player = 'O'
+        else: current_player = 'X'
 
     # prompt for a restart and assign the input to a 'restart' variable.
     # if yes,
@@ -178,4 +216,10 @@ def play_tic_tac_toe_game():
             
         # and reinitiate the game loop (play_t3()).
 
-play_tic_tac_toe_game()
+    play_again = input("\nDo you want to play another round? Answer 'yes' or 'no': ")
+    if play_again.lower() == 'yes':
+        for action in BOARD:
+            BOARD[action] = " "
+        play_tic_tac_toe_game()
+    else:
+        print("\nHope you enjoyed the game. See you next time!")
