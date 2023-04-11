@@ -2,6 +2,7 @@
 
 from rock_paper_scissors import play_rock_paper_scissors_game
 from hangman import *
+from tic_tac_toe import *
 
 menu_options = {
     1: "Rock paper scissors",
@@ -30,6 +31,7 @@ Your game menu:
         user_game_choice = None
 
     elif user_game_choice == '3':
+        play_tic_tac_toe_game()
         user_game_choice = None
 
     elif user_game_choice == 'exit':
